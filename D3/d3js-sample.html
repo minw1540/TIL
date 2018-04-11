@@ -57,6 +57,11 @@
                 8번 피자 차트
                 <svg id="splitDonutChart"></svg>
             </p>
+
+            <p data-info="개행-용-태그">
+                9번 비대칭 차트
+                <svg id="asymmetryChart"></svg>
+            </p>
         </div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -80,6 +85,7 @@
             lineGraph('graphContents', 'dotChart', 200, 300, dumpData, 50, false);
             barGraph('graphContents', 'barLineChart', 200, 300, dumpData, 50, true);
             pieGraph('graphContents', 'splitDonutChart', 200, 200, dumpData, 80, true);
+            asymmetryGraph('graphContents', 'asymmetryChart', 200, 200, dumpData);
 
             /**
              * [pieGraph description]
@@ -111,14 +117,14 @@
 
                 var dataColor = ['red', 'orange', 'yellow', 'green', 'blue', 'black'];
                 var radius = Math.min(graphWidth, graphHeight)/2;
-                var dateRange = [];
+                var dataRange = [];
 
                 for(var ii in graphData){
-                    dateRange.push(graphData[ii]);
+                    dataRange.push(graphData[ii]);
                 }
 
                 var color = d3.scale.ordinal()
-                                .domain(dateRange)
+                                .domain(dataRange)
                                 .range(dataColor);
 
                 var pie = d3.layout.pie()
@@ -147,27 +153,42 @@
                 }
 
                 //파이
-                d3.select('#' + graphID + 'Group')
+                var chart = d3.select('#' + graphID + 'Group')
                     .selectAll('path')
-                    .data(pie(dateRange))
+                    .data(pie(dataRange))
                     .enter()
                     .append('path')
                     .attr('fill', function(dd, ii){
                         return color(ii)
                     })
-                    .attr('d', arc);
+                    .attr('d', arc)
+                    .style('opacity', 0);
+
+                chart.transition()
+                    .delay(function(dd, ii) {
+                        return ii * ((dataRange.length/2) * 100);
+                    })
+                    .duration(((dataRange.length/2) * 100))
+                    .style('opacity', 1)
+                    .attrTween('d', function(dd) {
+                       var inter = d3.interpolate(dd.startAngle+0.1, dd.endAngle);
+                       return function(tt) {
+                           dd.endAngle = inter(tt);
+                         return arc(dd);
+                       }
+                    });
 
                 //텍스트
                 d3.select('#' + graphID + 'Group')
                     .selectAll('text.peopletext')
-                    .data(pie(dateRange))
+                    .data(pie(dataRange))
                     .enter()
                     .append('text')
                     .attr('class', 'people-text')
                     .attr('text-anchor', 'middle')
                     .attr('d', arc)
-                    .attr("transform", function(d) {
-                        return "translate(" + arc.centroid(d) + ")";
+                    .attr('transform', function(dd) {
+                        return 'translate(' + arc.centroid(dd) + ')';
                     })
                     .style('fill', '#fff')
                     .style('font-size', '10px')
@@ -268,10 +289,22 @@
                         return 'translate(' + transformRange + ',0)';
                     })
                     .attr('width', widthRange)
-                    .attr('height', function(dd, ii) { return graphHeight - graphMargin - yScale(parseInt(personNum[ii]));})
+                    .attr('height', function(dd, ii) {
+                        return 0;
+                    })
                     .attr('x', function (dd, ii) { return xScale(dd); })
-                    .attr('y', function (dd, ii) { return yScale(personNum[ii]); })
-                    .style('fill', 'blue');
+                    .attr('y', function (dd, ii) {
+                        return graphHeight - graphMargin;
+                    })
+                    .style('fill', 'blue')
+                    .transition()//animate 적용
+                    .duration(1000)
+                    .attr('y', function (dd, ii) {
+                        return yScale(personNum[ii]);
+                    })
+                    .attr('height', function(dd, ii) {
+                        return graphHeight - graphMargin - yScale(parseInt(personNum[ii]));
+                    });
 
                 //텍스트
                 d3.select('#'+ graphID)
@@ -290,7 +323,12 @@
                     })
                     .text(function(dd, ii) {
                         return personNum[ii] + '명';
-                    });
+                    })
+                    .style('opacity','0')
+                    .transition()//animate 적용
+                    .duration(1000)
+                    .style('opacity','1');
+
 
                 if(useLine){
                     //점
@@ -310,12 +348,21 @@
                         .x(function (dd, ii) {return xScale(dd) + 5; })
                         .y(function (dd, ii) { return yScale(personNum[ii]) + 2; });
 
-                    d3.select('#'+ graphID)
+                    var line = d3.select('#'+ graphID)
                         .append('path')
                         .attr('d', personNumLine(article))
                         .attr('fill', 'none')
                         .attr('stroke', 'orange')
                         .attr('stroke-width', '2');
+
+                    var totalLength = line.node().getTotalLength();
+
+                    line.attr('stroke-dasharray', totalLength + ' ' + totalLength)
+                        .attr('stroke-dashoffset', totalLength)
+                        .transition()
+                        .duration(2000)
+                        .ease('linear')
+                        .attr('stroke-dashoffset', 0);
                 }
 
                 return;
@@ -395,7 +442,7 @@
                 d3.selectAll('#'+ graphID + 'yAxisG')
                     .attr('transform', 'translate(' + graphMargin+ ', 0)');
 
-                var clickRange = (xScale.range()[1] - xScale.range()[0]);
+                var barRange = (xScale.range()[1] - xScale.range()[0]);
 
                 //영역
                 d3.select('#'+ graphID)
@@ -405,10 +452,10 @@
                     .append('rect')
                     .style('fill', 'rgba(255, 255, 255, 0)')
                     .attr('class', 'line-area')
-                    .attr('width', clickRange)
+                    .attr('width', barRange)
                     .attr('height', graphHeight - graphMargin * 2)
                     .attr('transform', function(dd) {
-                        return 'translate(' + ((xScale(dd) - clickRange/2)) + ', ' + graphMargin + ')';
+                        return 'translate(' + ((xScale(dd) - barRange/2)) + ', ' + graphMargin + ')';
                     });
 
                 //점
@@ -421,7 +468,11 @@
                     .attr('r', 5)
                     .attr('cx', function (dd, ii) { return xScale(dd); })
                     .attr('cy', function (dd, ii) { return yScale(personNum[ii]); })
-                    .style('fill', 'red');
+                    .style('fill', 'red')
+                    .style('opacity','0')
+                    .transition()//animate 적용
+                    .duration(2000)
+                    .style('opacity','1');
 
                 if(useLine){
                     //라인
@@ -429,12 +480,21 @@
                         .x(function (dd, ii) {return xScale(dd); })
                         .y(function (dd, ii) { return yScale(personNum[ii]); });
 
-                    d3.select('#'+ graphID)
+                    var line = d3.select('#'+ graphID)
                         .append('path')
                         .attr('d', personNumLine(article))
                         .attr('fill', 'none')
                         .attr('stroke', 'red')
                         .attr('stroke-width', '2');
+
+                    var totalLength = line.node().getTotalLength();
+
+                    line.attr('stroke-dasharray', totalLength + ' ' + totalLength)
+                        .attr('stroke-dashoffset', totalLength)
+                        .transition()//animate 적용
+                        .duration(2000)
+                        .ease('linear')
+                        .attr('stroke-dashoffset', 0);
                 }else{
                     //도트 (라인 사용 x)
                     // 최대, 최소값만 텍스트 처리
@@ -464,8 +524,113 @@
                         })
                         .text(function(dd, ii) {
                             return personNum[ii] + '명';
-                        });
+                        })
+                        .style('opacity','0')
+                        .transition()//animate 적용
+                        .duration(2000)
+                        .style('opacity','1');
                 }
+                return;
+            }
+
+
+            /**
+             * [asymmetryGraph description]
+             * 비대칭 파이차트
+             * @param  {[string]}  containerID [graph container id]
+             * @param  {[string]}  graphID     [graph svg id]
+             * @param  {[number]}  graphWidth  [그래프 넓이]
+             * @param  {[number]}  graphHeight [그래프 높이]
+             * @param  {[any]}  graphData   [그래프 데이터]
+             */
+            function asymmetryGraph(containerID, graphID, graphWidth, graphHeight, graphData) {
+
+                var _svgContainer = undefined;
+
+                _svgContainer = d3.select('#' + containerID)
+                    .select('#'+graphID)
+                    .attr({
+                        'id': graphID,
+                        'class' : 'svg',
+                        'width': graphWidth,
+                        'height': graphHeight
+                });
+
+                _svgContainer.append('g')
+                            .attr('id', graphID + 'Group')
+                            .attr('transform', 'translate(' + graphWidth/2 + ', ' + graphHeight/2 + ')');
+
+                var dataColor = ['red', 'orange', 'yellow', 'green', 'blue', 'black'];
+                var radius = Math.min(graphWidth, graphHeight)/2;
+                var dataRange = [];
+
+                for(var ii in graphData){
+                    dataRange.push(graphData[ii]);
+                }
+
+                var color = d3.scale.ordinal()
+                      .domain(dataRange)
+                      .range(dataColor);
+
+                var radiusScale = d3.scale.sqrt().range([0, radius]);
+                radiusScale.domain([0, d3.max(dataRange, function (dd){ return dd; })]);
+
+                var pie = d3.layout.pie()
+                                .value(function(dd, ii) {
+                                    return dd;
+                                })
+                                .sort(null);
+
+                var arc = d3.svg.arc()
+                                .outerRadius(function(dd) {
+                                  return radiusScale(dd.data);
+                                })
+                                .innerRadius(0);
+
+                var chart = d3.select('#' + graphID + 'Group')
+                    .selectAll('path')
+                    .data(pie(dataRange))
+                    .enter()
+                    .append('path')
+                    .attr('d', arc)
+                    .attr('fill', function (dd, ii){
+                        return color(ii);
+                    })
+                    .style('opacity', 0);
+
+                chart.transition()
+                    .delay(function(dd, ii) {
+                        return ii * ((dataRange.length/2) * 100);
+                    })
+                    .duration(((dataRange.length/2) * 100))
+                    .style('opacity', 1)
+                    .attrTween('d', function(dd) {
+                       var inter = d3.interpolate(dd.startAngle+0.1, dd.endAngle);
+                       return function(tt) {
+                           dd.endAngle = inter(tt);
+                         return arc(dd);
+                       }
+                    });
+
+
+                //텍스트
+                d3.select('#' + graphID + 'Group')
+                    .selectAll('text.peopletext')
+                    .data(pie(dataRange))
+                    .enter()
+                    .append('text')
+                    .attr('class', 'people-text')
+                    .attr('text-anchor', 'middle')
+                    .attr('d', arc)
+                    .attr("transform", function(d) {
+                        return "translate(" + arc.centroid(d) + ")";
+                    })
+                    .style('fill', '#fff')
+                    .style('font-size', '10px')
+                    .text(function(dd, ii) {
+                        return Number(ii) + 1 + '번';
+                    });
+
                 return;
             }
 
