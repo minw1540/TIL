@@ -1,0 +1,29 @@
+ol, ul {
+    list-style: none;
+}
+
+.home-container {
+    background: #eee;
+    margin-top: 10%;
+    padding-bottom: 50px;
+}
+
+.user-info-title {
+    height: 50px;
+    font-size: 15px;
+    text-align: center;
+    line-height: 50px;
+}
+
+.user-info-text {
+    height: 30px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+}
+
+.user-list-box:hover {
+    background: #ddd;
+    border-radius: 20px;
+}

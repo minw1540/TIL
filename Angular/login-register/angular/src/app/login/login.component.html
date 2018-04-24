@@ -1,0 +1,39 @@
+<div class="login-container container">
+    <div class="col-md-6 col-md-offset-3">
+
+        <h2>Login</h2>
+
+        <div class="form-group">
+                <span class="col-md-12">UserID</span>
+                <input #userId type="text" class="form-control" />
+                <span class="login-warning-tool-tip"
+                    [class.active]="_loginWarning.userId"
+                >
+                    * ID를 입력해주세요!
+                </span>
+                <span class="login-warning-tool-tip"
+                    [class.active]="_loginWarning.unknownUserId"
+                >
+                    * 존재하지 않는 ID입니다.
+                </span>
+
+        </div>
+
+        <div class="form-group">
+                <span class="col-md-12">PassWord</span>
+                <input #userPwd type="password" class="form-control" />
+                <span class="login-warning-tool-tip"
+                    [class.active]="_loginWarning.userPwd"
+                >
+                    * PWD를 입력해주세요!
+                </span>
+        </div>
+
+        <div class="col-md-12">
+            <button type="button" class="btn btn-default" (click)="onLogin(userId, userPwd)">Login</button>
+            <button type="button" class="btn btn-primary" (click)="goRegister()">Register</button>
+        </div>
+
+    </div>
+
+</div>

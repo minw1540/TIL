@@ -1,0 +1,14 @@
+.login-container {
+    background: #eee;
+    margin-top: 10%;
+    padding-bottom: 50px;
+}
+
+.login-warning-tool-tip {
+    color: coral;
+    display: none;
+}
+
+.login-warning-tool-tip.active {
+    display: block;
+}

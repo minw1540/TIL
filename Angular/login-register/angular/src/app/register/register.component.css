@@ -1,0 +1,14 @@
+.regiset-container {
+    background: #eee;
+    margin-top: 10%;
+    padding-bottom: 50px;
+}
+
+.register-warning-tool-tip {
+    color: coral;
+    display: none;
+}
+
+.register-warning-tool-tip.active {
+    display: block;
+}

@@ -1,0 +1,33 @@
+<div class="home-container container">
+    <div class="col-md-6 col-md-offset-3">
+
+        <h2>User List</h2>
+
+        <ul class="col-md-12">
+            <li class="col-md-12">
+                <span class="user-info-title col-md-2">No</span>
+                <span class="user-info-title col-md-3">ID</span>
+                <span class="user-info-title col-md-3">Pwd</span>
+                <span class="user-info-title col-md-4">Name</span>
+            </li>
+        </ul>
+
+        <ul class="col-md-12">
+            <li class="col-md-12 user-list-box"
+                *ngFor="let user of userList"
+            >
+                <span class="user-number user-info-text col-md-2">{{user.userNumber}}</span>
+                <span class="user-id user-info-text col-md-3">{{user.userId}}</span>
+                <span class="user-pwd user-info-text col-md-3">{{user.userPwd}}</span>
+                <span class="user-name user-info-text col-md-4">{{user.userName}}</span>
+            </li>
+        </ul>
+
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary" (click)="onBack()">back</button>
+        </div>
+
+
+    </div>
+
+</div>

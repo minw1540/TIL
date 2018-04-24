@@ -1,0 +1,48 @@
+<div class="regiset-container container">
+    <div class="col-md-6 col-md-offset-3">
+
+        <h2>Register</h2>
+
+        <div class="form-group">
+            <span class="col-md-12">UserId</span>
+            <input #userId type="text" class="form-control" />
+            <span class="register-warning-tool-tip"
+                [class.active]="_registerWarning.userId"
+            >
+                * ID를 입력해주세요!
+            </span>
+            <span class="register-warning-tool-tip"
+                [class.active]="_registerWarning.alreadyUsedId"
+            >
+                * 이미 존재하는 ID 입니다.
+            </span>
+        </div>
+
+        <div class="form-group">
+            <span class="col-md-12">UserPwd</span>
+            <input #userPwd type="password" class="form-control" />
+            <span class="register-warning-tool-tip"
+                [class.active]="_registerWarning.userPwd"
+            >
+                * Pwd를 입력해주세요!
+            </span>
+        </div>
+
+        <div class="form-group">
+            <span class="col-md-12">UserName</span>
+            <input #userName type="text" class="form-control" />
+            <span class="register-warning-tool-tip"
+                [class.active]="_registerWarning.userName"
+            >
+                * Name를 입력해주세요!
+            </span>
+        </div>
+
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary" (click)="onRegister(userId, userPwd, userName)">Register</button>
+            <button type="button" class="btn btn-default" (click)="goLogin()">Cancel</button>
+        </div>
+
+    </div>
+
+</div>

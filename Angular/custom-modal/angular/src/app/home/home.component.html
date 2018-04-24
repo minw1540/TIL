@@ -1,0 +1,48 @@
+<div class="col-md-6 col-md-offset-3">
+    <h1>Home</h1>
+    <p>{{bodyText}}</p>
+    <button type="button" class="btn btn-success"
+        (click)="openModal('custom-modal-1')"
+    >
+        1번 모달
+    </button>
+    <button type="button" class="btn btn-info"
+        (click)="openModal('custom-modal-2')"
+    >
+        2번 모달
+    </button>
+</div>
+
+<modal id="custom-modal-1">
+    <div class="modal col-md-9 col-md-offset-2">
+        <div class="modal-body">
+                <h1>1번 모달!</h1>
+                <p>Home Page 텍스트를 변경 합니다! :</p>
+                <div class="form-group"></div>
+                <input class="form-control" type="text" value="{{bodyText}}" [(ngModel)]="bodyText" required/>
+                <button type="button" class="btn btn-primary form-control"
+                    style="margin-top: 10px;"
+                    (click)="closeModal('custom-modal-1')"
+                >
+                    종료
+                </button>
+        </div>
+        <div class="modal-background"></div>
+
+    </div>
+</modal>
+
+
+<modal id="custom-modal-2">
+    <div class="modal col-md-9 col-md-offset-2">
+        <div class="modal-body">
+            <h1 style="height:100px">모달모달모달~</h1>
+            <button type="button" class="btn btn-primary"
+                (click)="closeModal('custom-modal-2')"
+            >
+                종료
+            </button>
+        </div>
+    </div>
+    <div class="modal-background"></div>
+</modal>

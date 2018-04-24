@@ -1,0 +1,31 @@
+body {
+    font-family: roboto;
+    padding: 20px;
+}
+
+nav {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+nav > a {
+    margin-right: 8px;
+}
+
+
+h1 {
+    font-weight: normal;
+    margin-top: 0;
+}
+
+input[type="text"] {
+    display:block;
+    width: 100%;
+    font-family: roboto;
+}
+
+.main-container {
+    margin-top: 5%;
+}
+
