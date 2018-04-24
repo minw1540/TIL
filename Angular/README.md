@@ -16,7 +16,7 @@
 
 	참고 : http://jasonwatmore.com/post/2017/01/24/angular-2-custom-modal-window-dialog-box
 
-[custom-modal]: https://github.com/minw1540/TIL/blob/master/Angular/custom-modal/READEME.md
+[custom-modal]: https://github.com/minw1540/TIL/blob/master/Angular/custom-modal
 
  모달 1번 화면 
 
@@ -27,7 +27,7 @@
 
 	참고 : http://jasonwatmore.com/post/2016/09/29/angular-2-user-registration-and-login-example-tutorial
 
-[login-register]: https://github.com/minw1540/TIL/blob/master/Angular/login-register/READEME.md
+[login-register]: https://github.com/minw1540/TIL/blob/master/Angular/login-register
 
  모달 1번 화면 
 
