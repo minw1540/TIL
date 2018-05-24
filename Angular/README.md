@@ -41,3 +41,10 @@ Angular subscribe(구독) 과 unsubscribe(구독 취소)
 
 [angular-subscribe-unsubscribe]: https://github.com/minw1540/TIL/blob/master/Angular/angular-subscribe-unsubscribe.md
 
+
+- ### angular 에서 mouseWheel event 사용
+mouseWheel을  상,하 로 움직일시 해당 element를 좌,우 로 스크롤하기!
+
+  [onMouseWheel][]
+
+[onMouseWheel]: https://github.com/minw1540/TIL/blob/master/Angular/on-mouse-wheel.md
