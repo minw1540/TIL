@@ -42,7 +42,7 @@
 
 
 
-* + 해당 element 좌,우 로 스크롤 하기 (.ts)
+* 해당 element 좌,우 로 스크롤 하기 (.ts)
 -------
 
     OnMouseWheel(event : any, elem : HTMLElement){
