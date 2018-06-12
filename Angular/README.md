@@ -48,3 +48,10 @@ mouseWheel을  상,하 로 움직일시 해당 element를 좌,우 로 스크롤�
   [onMouseWheel][]
 
 [onMouseWheel]: https://github.com/minw1540/TIL/blob/master/Angular/on-mouse-wheel.md
+
+- ### angular Scroll Handlers 성능 향상 시키기 
+리소스를 많이 잡아 먹는 Scroll Handlers 성능 향상 시키기
+
+  [scroll-handlers-performance-improvements][]
+
+[scroll-handlers-performance-improvements]: https://github.com/minw1540/TIL/blob/master/Angular/scroll-handlers-performance-improvements.md
