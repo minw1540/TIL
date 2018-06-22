@@ -55,3 +55,9 @@ mouseWheel을  상,하 로 움직일시 해당 element를 좌,우 로 스크롤�
   [scroll-handlers-performance-improvements][]
 
 [scroll-handlers-performance-improvements]: https://github.com/minw1540/TIL/blob/master/Angular/scroll-handlers-performance-improvements.md
+
+- ### angular 변화 감지 최소화 시키기 
+
+  [minimize-change-detections][]
+
+[minimize-change-detections]: https://github.com/minw1540/TIL/blob/master/Angular/minimize-change-detections.md
