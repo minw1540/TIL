@@ -14,8 +14,6 @@
 
 - ### angular의 디렉티브를 이용 하여 모달 창 만들기 [custom-modal][]
 
-	참고 : http://jasonwatmore.com/post/2017/01/24/angular-2-custom-modal-window-dialog-box
-
 [custom-modal]: https://github.com/minw1540/TIL/blob/master/Angular/custom-modal
 
  모달 1번 화면 
@@ -24,8 +22,6 @@
  
 
 - ### angular의 라우터를 사용하여 로그인 화면과 회원등록 화면을 만들어보자 [login-register][]
-
-	참고 : http://jasonwatmore.com/post/2016/09/29/angular-2-user-registration-and-login-example-tutorial
 
 [login-register]: https://github.com/minw1540/TIL/blob/master/Angular/login-register
 
@@ -58,6 +54,6 @@ mouseWheel을  상,하 로 움직일시 해당 element를 좌,우 로 스크롤�
 
 - ### angular 변화 감지 최소화 시키기 
 
-  [minimize-change-detections][]
+[minimize-change-detections][]
 
 [minimize-change-detections]: https://github.com/minw1540/TIL/blob/master/Angular/minimize-change-detections.md
