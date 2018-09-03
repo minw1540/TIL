@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko" >
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>vue 디렉티브</title>
+    </head>
+    <body>
+        <div id="app">
+            <template v-if="name">
+                <h1>Hello, {{ name }}</h1>
+            </template>
+
+            <template v-else>
+                <h1>안녕하세요, 정보를 입력해주세요.</h1>
+            </template>
+
+            <div>
+                <div>이름을 입력해주세요.</div>
+                <input v-model="name"/>
+            </div>
+
+            <div style="margin-top: 15px;">
+                <div>성별을 선택해주세요.</div>
+                남자 : <input v-model="gender" type="radio" name="gender" value="man" />
+                여자 : <input v-model="gender" type="radio" name="gender" value="woman" />
+            </div>
+
+            <div v-if="name && gender" style="margin-top: 15px;">
+                <h2>환영합니다.</h2>
+                <h2 v-show="gender === 'man'">남성</h2>
+                <h2 v-show="gender === 'woman'">여성</h2>
+                <h2>{{ name }} 님</h2>
+            </div>
+        </div>
+    </body>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script type="text/javascript">
+
+        var data = {
+            name : '',
+            gender : '',
+        };
+
+        new Vue({
+            el : '#app',
+            data : data
+        });
+    </script>
+</html>
