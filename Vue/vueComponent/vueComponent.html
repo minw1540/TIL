@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ko" >
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <title>vue component</title>
+    </head>
+    <body>
+        <div id="app" class="container">
+            <h1>Todo List</h1>
+            <ul class="list-group">
+                <todo v-for="todo in todos" v-bind:todo="todo"></todo>
+            </ul>
+
+            <div>
+                <h1>리스트 추가</h1>
+                <input v-model="userInput" @keyup.enter="addTodoList"/>
+                <button @click="addTodoList">추가하기</button>
+            </div>
+        </div>
+
+        <template id="todoItem">
+            <li class="list-group-item">
+                {{ todo.index + 1 }} 번  {{ todo.contents }}
+            </li>
+        </template>
+    </body>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script type="text/javascript">
+
+        var data = {
+            userInput : '',
+            todos: [
+                {
+                    index : 0,
+                    contents : 'ES6 공부하기',
+                },
+                {
+                    index : 1,
+                    contents : 'Angular 공부하기',
+                },
+                {
+                    index : 2,
+                    contents : 'Vue 공부하기',
+                },
+                {
+                    index : 3,
+                    contents : '맛있는것 먹기',
+                },
+            ],
+        };
+
+        //to do list 추가
+        function addTodoList() {
+            if(this.userInput === ''){
+                return;
+            }
+
+            this.todos.push({index : this.todos.length, contents : this.userInput});
+            this.userInput = '';
+            return;
+        };
+
+
+        Vue.component('todo', {
+            template : '#todoItem',
+            props : ['todo'],
+        });
+
+        new Vue({
+            el: '#app',
+            data: data,
+            methods : {
+                addTodoList : addTodoList,
+            }
+        });
+
+    </script>
+</html>

@@ -12,3 +12,5 @@
 - [Vue Directive](https://github.com/minw1540/TIL/blob/master/Vue/vueDirective/)
 
 - [Vue For](https://github.com/minw1540/TIL/blob/master/Vue/vueFor/)
+
+- [Vue Component](https://github.com/minw1540/TIL/blob/master/Vue/vueComponent/)
