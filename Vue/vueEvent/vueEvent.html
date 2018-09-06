@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko" >
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <title>vue event</title>
+    </head>
+    <body>
+        <div id="app" class="container">
+            <h1>카운트</h1>
+            <p>
+                {{ totalCount }}
+            </p>
+            <count action="like" @total="totalCounter"></count>
+            <count action="unlike" @total="totalCounter"></count>
+        </div>
+
+        <template id="count">
+            <button @click="counter"> {{ action }} : {{ count }}</button>
+        </template>
+
+    </body>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script type="text/javascript">
+
+        Vue.component('count', {
+            template : '#count',
+            props : ['action'],
+            data : function () {
+                return { count : 0 }
+            },
+            methods : {
+                counter : function () {
+                    this.count++;
+                    this.$emit('total', this.action);
+                    return;
+                },
+            }
+        });
+
+        new Vue({
+            el: '#app',
+            data : {
+                totalCount : 0,
+            },
+            methods : {
+                totalCounter : function (action) {
+                    if(action === 'like'){
+                        this.totalCount++;
+                    }else{
+                        this.totalCount--;
+                    }
+                    return;
+                },
+            },
+        });
+
+    </script>
+</html>
