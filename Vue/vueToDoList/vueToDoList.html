@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ko" >
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <title>vue to do list</title>
+    </head>
+    <body>
+        <div id="app" class="container">
+            <h1>Todo List</h1>
+            <ul class="list-group">
+                <todo v-for="(todo, index) in todos" :todo="todo" :num="index" @change="changeTodoList"></todo>
+            </ul>
+
+            <div>
+                <h1>리스트 추가</h1>
+                <input v-model="userInput" @keyup.enter="addTodoList"/>
+                <button @click="addTodoList">추가하기</button>
+            </div>
+
+        </div>
+
+        <template id="todoItem">
+            <li class="list-group-item">
+                <div v-if="!todo.isEdit">
+                    {{ num + 1 }} 번 {{ todo.contents }}
+                    <button class="btn btn-primary" @click="edit">수정</button>
+                    <button class="btn btn-danger" @click="deleteTodo">삭제</button>
+                </div>
+                <div v-else class="form-group">
+                    <input class="form-control" v-model="todo.contents" @keyup.enter="complete"/>
+                    <button class="btn btn-default form-control" @click="complete">수정완료</button>
+                </div>
+            </li>
+        </template>
+    </body>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script type="text/javascript">
+
+        var data = {
+            userInput : '',
+            todos: [
+                {
+                    contents : 'ES6 공부하기',
+                    isEdit : false,
+                },
+                {
+                    contents : 'Angular 공부하기',
+                    isEdit : false,
+                },
+                {
+                    contents : 'Vue 공부하기',
+                    isEdit : false,
+                },
+                {
+                    contents : '맛있는것 먹기',
+                    isEdit : false,
+                },
+            ],
+        };
+
+        Vue.component('todo', {
+            template : '#todoItem',
+            props : ['todo', 'num'],
+            methods : {
+                edit : function () {
+                    this.$emit('change', this.todo, 'edit');
+                    return;
+                },
+                complete : function () {
+                    this.$emit('change', this.todo, 'complete');
+                    return;
+                },
+                deleteTodo : function () {
+                    this.$emit('change', this.todo, 'delete');
+                    return;
+                }
+            }
+        });
+
+        new Vue({
+            el: '#app',
+            data: data,
+            methods : {
+                addTodoList : function () {
+                    if(this.userInput === ''){
+                        return;
+                    }
+
+                    this.todos.push({contents : this.userInput, isEdit : false});
+                    this.userInput = '';
+                    return;
+                },
+                changeTodoList : function (data, type) {
+
+                    if(typeof type === 'undefined'){
+                        return;
+                    }
+
+                    var index = this.todos.indexOf(data);
+
+                    if(index < 0){
+                        return;
+                    }
+
+                    switch(type){
+                        case 'edit' :
+                            data.isEdit = true;
+                            break;
+                        case 'complete' :
+                            data.isEdit = false;
+                            break;
+                        case 'delete' :
+                            this.todos.splice(index,1);
+                            break;
+                    }
+
+                    return;
+                },
+            },
+        });
+
+    </script>
+</html>
