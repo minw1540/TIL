@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko" >
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel=stylesheet href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="./assets/css/reset.css" type="text/css" />
+        <link rel="stylesheet" href="./assets/css/login/login.css" type="text/css" />
+        <title>vue http</title>
+    </head>
+    <body>
+        <div id="app" class="login-container">
+            <ul class="login-area">
+                <li class="login-box">
+                    <i class="login-input-icon material-icons">&#xE853;</i>
+                    <input class="login-input"
+                        type="text"
+                        autocomplete="off"
+                        placeholder="id"
+                        ref="userId"
+                        v-model="userId"
+                    />
+                </li>
+
+                <li class="login-box">
+                    <i class="login-input-icon material-icons">&#xE0DA;</i>
+                    <input class="login-input"
+                        type="password"
+                        autocomplete="off"
+                        placeholder="pwd"
+                        ref="userPwd"
+                        v-model="userPwd"
+                        @keyup.enter="login"
+                    />
+                </li>
+
+                <li class="login-btn-box">
+                    <button class="login-btn pointer" @click="login">입장!</button>
+                </li>
+            </ul>
+        </div>
+    </body>
+        <script type="text/javascript" src="./assets/js/environment.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script type="text/javascript" src="./assets/js/login/loginApp.js"></script>
+</html>
