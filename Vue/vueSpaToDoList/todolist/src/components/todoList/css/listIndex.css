@@ -1,0 +1,51 @@
+.list-container {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: 5% 15px 30px 15px;
+}
+
+.list-area {
+    width: 100%;
+    height: 100%;
+    max-width: 970px;
+    display: inline-block;
+    border-radius: 25px;
+    border: 1px solid #e2464e;
+    height: auto;
+    padding: 25px 15px 0 15px;
+}
+
+.list-input-box {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 40px;
+    padding: 5px 20px;
+    background: #fff;
+    border: 1.2px solid #e2464e;
+    border-radius: 10px;
+}
+
+.list-input {
+    width: calc( 100% - 40px );
+    height: 100%;
+    font-size: 0.9em;
+    float: left;
+}
+
+.list-input-btn {
+    width: 30px;
+    height: 100%;
+    float: right;
+    background: transparent;
+}
+
+.list-input-icon {
+    color: #f68d92;
+    line-height: 37px;
+}
+
+.list-item-box {
+    width: 100%;
+    height: auto;
+}
