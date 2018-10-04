@@ -3,17 +3,15 @@ import * as _config from '../../../assets/js/config.js';
 
 export default {
     name : 'Todo',
-    props : ['todo', 'edit'],
+    props : ['todo'],
     methods : {
-        changeTodoStatus() {
+        changeTodoStatus(status) {
 
-            let complete = undefined;
-
-            if(this.todo.IS_COMPLETE === 1){
-                complete = 0;
-            }else{
-                complete = 1;
+            if(typeof status === 'undefined'){
+                return;
             }
+
+            let complete = status;
 
             _axios.put(_config.apiUrl + 'list/upDateToDoListStatus', {
                     NO : this.todo.NO,
@@ -31,6 +29,11 @@ export default {
                     }
 
                     this.todo.IS_COMPLETE = complete;
+
+                    if(this.todo.IS_COMPLETE === 3){
+                        this.toggleEdit();
+                        this.$parent.getList();
+                    }
                     return;
                 })
                 .catch((error) => {
@@ -39,12 +42,52 @@ export default {
             return;
         },
         toggleEdit() {
-            if(this.edit){
-                this.edit = false;
+            if(this.todo.edit){
+                this.todo.edit = false;
             }else{
-                this.edit = true;
+                this.todo.edit = true;
             }
 
+            return;
+        },
+        editTodoContent() {
+
+            let editText = this.todo.editText.trim();
+
+            if(editText === this.todo.CONTENT){
+                this.$refs.editTextElem.blur();
+                this.toggleEdit();
+                return;
+            }
+
+            if(editText === ''){
+                alert('내용을 입력해 주세요.');
+                this.$refs.editTextElem.focus();
+                return;
+            }
+
+            _axios.put(_config.apiUrl + 'list/upDateToDoListContent', {
+                    NO : this.todo.NO,
+                    CONTENT : editText,
+                    token : this.$parent.$parent.token,
+                })
+                .then((response) => {
+
+                    let result = response.data;
+
+                    if(result.result !== 1){
+                        alert('error!');
+                        this.$parent.getList();
+                        return;
+                    }
+
+                    this.todo.CONTENT = editText;
+                    this.toggleEdit();
+                    return;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             return;
         }
     }

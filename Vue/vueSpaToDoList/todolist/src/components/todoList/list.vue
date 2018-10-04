@@ -14,7 +14,7 @@
             </div>
 
             <ul class="list-item-box">
-                <todo v-for="todo in list" :todo="todo" :edit="false"></todo>
+                <todo v-for="todo in list" :todo="todo"></todo>
             </ul>
         </div>
     </div>

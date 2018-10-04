@@ -1,5 +1,6 @@
 import _axios from 'axios';
 import * as _config from '../../../assets/js/config.js';
+import * as _ from 'underscore';
 
 import Todo from '../../todoItem/todo.vue'
 
@@ -35,7 +36,13 @@ export default {
                     return;
                 }
 
-                this.list = result.data;
+                this.list = [];
+
+                _.each(result.data, (data) => {
+                    data.edit = false;
+                    data.editText = data.CONTENT;
+                    this.list.push(data);
+                });
                 return;
             })
             .catch((error) => {

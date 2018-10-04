@@ -13,6 +13,7 @@ export default {
     },
     methods : {
         login() {
+
             let userId = this.userId.trim();
             let userPwd = this.userPwd.trim();
 
@@ -40,7 +41,6 @@ export default {
             .then((response) => {
 
                 let result = response.data;
-
                 if(result.result !== 1){
                     alert('로그인에 실패 하였습니다.');
                     return;
@@ -52,7 +52,11 @@ export default {
                     return;
                 }
 
+                this.$refs.userId.blur();
+                this.$refs.userPwd.blur();
+
                 localStorage.setItem('asToken', result.token);
+                this.$parent.setToken(result.token);
                 this.$parent.changeUserStatus(true);
                 return;
             })
