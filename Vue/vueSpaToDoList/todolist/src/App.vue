@@ -7,10 +7,11 @@
 <script>
 
 import _axios from 'axios';
-import * as _config from './assets/js/config.js';
 
 import Login from './components/login/login.vue'
 import List from './components/todoList/list.vue'
+
+const _apiUrl = process.env.VUE_APP_API_URL;
 
 export default {
     name: 'app',
@@ -41,7 +42,7 @@ export default {
             return;
         }
 
-        _axios.get(_config.apiUrl + 'list/isLogined', {
+        _axios.get(_apiUrl + 'list/isLogined', {
             params: {token : token}
         })
         .then((response) => {

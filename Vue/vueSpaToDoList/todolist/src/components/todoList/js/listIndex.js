@@ -1,8 +1,9 @@
 import _axios from 'axios';
-import * as _config from '../../../assets/js/config.js';
 import * as _ from 'underscore';
 
 import Todo from '../../todoItem/todo.vue'
+
+const _apiUrl = process.env.VUE_APP_API_URL;
 
 const listData = {
     list : [],
@@ -24,7 +25,7 @@ export default {
                 return;
             }
 
-            _axios.get(_config.apiUrl + 'list/getToDoList', {
+            _axios.get(_apiUrl + 'list/getToDoList', {
                 params: {token : this.$parent.token}
             })
             .then((response) => {
@@ -57,7 +58,7 @@ export default {
                 return;
             }
 
-            _axios.post(_config.apiUrl + 'list/addNewList', {
+            _axios.post(_apiUrl + 'list/addNewList', {
                 token : this.$parent.token,
                 contents : contents,
             })

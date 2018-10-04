@@ -1,5 +1,6 @@
 import _axios from 'axios';
-import * as _config from '../../../assets/js/config.js';
+
+const _apiUrl = process.env.VUE_APP_API_URL;
 
 export default {
     name : 'Todo',
@@ -13,7 +14,7 @@ export default {
 
             let complete = status;
 
-            _axios.put(_config.apiUrl + 'list/upDateToDoListStatus', {
+            _axios.put(_apiUrl + 'list/upDateToDoListStatus', {
                     NO : this.todo.NO,
                     IS_COMPLETE : complete,
                     token : this.$parent.$parent.token,
@@ -66,7 +67,7 @@ export default {
                 return;
             }
 
-            _axios.put(_config.apiUrl + 'list/upDateToDoListContent', {
+            _axios.put(_apiUrl + 'list/upDateToDoListContent', {
                     NO : this.todo.NO,
                     CONTENT : editText,
                     token : this.$parent.$parent.token,

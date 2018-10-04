@@ -1,5 +1,6 @@
 import _axios from 'axios';
-import * as _config from '../../../assets/js/config.js';
+
+const _apiUrl = process.env.VUE_APP_API_URL;
 
 const loginData = {
     userId : '',
@@ -35,7 +36,7 @@ export default {
                 USE_TIME : 1, //1day
             };
 
-            _axios.get(_config.apiUrl + 'list/userLogin', {
+            _axios.get(_apiUrl + 'list/userLogin', {
                 params: param
             })
             .then((response) => {
