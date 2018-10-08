@@ -8,6 +8,7 @@ const _apiUrl = process.env.VUE_APP_API_URL;
 const listData = {
     list : [],
     newTodoInput : '',
+    isApiCall : false,
 };
 
 export default {
@@ -47,10 +48,13 @@ export default {
                 return;
             })
             .catch((error) => {
-                console.log(error);
             });
         },
         addTodo() {
+
+            if(this.isApiCall){
+                return;
+            }
 
             let contents = this.newTodoInput.trim();
 
@@ -58,11 +62,15 @@ export default {
                 return;
             }
 
+            this.isApiCall = true;
+
             _axios.post(_apiUrl + 'list/addNewList', {
                 token : this.$parent.token,
                 contents : contents,
             })
             .then((response) => {
+
+                this.isApiCall = false;
 
                 let result = response.data;
 
@@ -77,7 +85,7 @@ export default {
                 return;
             })
             .catch((error) => {
-                console.log(error);
+                this.isApiCall = false;
                 this.newTodoInput = '';
                 return;
             });
