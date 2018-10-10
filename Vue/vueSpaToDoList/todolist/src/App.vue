@@ -34,33 +34,36 @@ export default {
             this.token = token;
             return;
         },
-    },
-    created() {
-        let token = localStorage.getItem('asToken');
+        isLogined() {
+            let token = localStorage.getItem('asToken');
 
-        if(token === null){
-            return;
-        }
-
-        _axios.get(_apiUrl + 'list/isLogined', {
-            params: {token : token}
-        })
-        .then((response) => {
-
-            let result = response.data;
-
-            if(result.data.code !== 1){
-                localStorage.removeItem('asToken');
+            if(token === null){
                 return;
             }
 
-            this.setToken(token);
-            this.changeUserStatus(true);
+            _axios.get(_apiUrl + 'list/isLogined', {
+                params: {token : token}
+            })
+            .then((response) => {
+
+                let result = response.data;
+
+                if(result.data.code !== 1){
+                    localStorage.removeItem('asToken');
+                    return;
+                }
+
+                this.setToken(token);
+                this.changeUserStatus(true);
+                return;
+            })
+            .catch((error) => {
+            });
             return;
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+        },
+    },
+    created() {
+        this.isLogined();
         return;
     },
 }

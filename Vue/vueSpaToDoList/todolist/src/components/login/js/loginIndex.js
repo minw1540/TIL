@@ -57,8 +57,7 @@ export default {
                 this.$refs.userPwd.blur();
 
                 localStorage.setItem('asToken', result.token);
-                this.$parent.setToken(result.token);
-                this.$parent.changeUserStatus(true);
+                this.$parent.isLogined();
                 return;
             })
             .catch((error) => {
