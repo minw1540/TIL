@@ -69,39 +69,62 @@ function en(encTarget) {
 	return tempNumMergeStr + (keyRandomNum+150).toString(16);
 };
 
-function de(e) {
-	var kt = _keyStr, ks,
-		t = "",
-		g, n, r, i, s, o, u, a, f = 0,h=0,
-		kr = parseInt(e.substr(e.length - 2), 16)-150;
-	e = e.substring(0, e.length - 2);
-	e = e.replace(/[^A-Za-z0-9\+\/\=]/g, "");
-	var l = e.length;
-	if (l%4 > 0) e+= Array((l%4)+1).join('=');
-	//kt = SS(kt,kr);
-	while (f < l) {
-		kt = _snipString(kt,kr);
-		ks = kt + "+/=";
-		g = e.charAt(f++) + e.charAt(f++) + e.charAt(f++) + e.charAt(f++);
-		h++;
-		if (g[2] != '=' && g[3] != '=') g = _snipString(g, 4-(h%4));
-		s = ks.indexOf(g[0]);
-		o = ks.indexOf(g[1]);
-		u = ks.indexOf(g[2]);
-		a = ks.indexOf(g[3]);
-		n = s << 2 | o >> 4;
-		r = (o & 15) << 4 | u >> 2;
-		i = (u & 3) << 6 | a;
-		t = t + CC(n);
-		if (u != 64) {
-			t = t + CC(r)
+function de(decoding) {
+	var keyValue = _keyStr;
+	var keyValueParse = '';
+	var tempNumMergeStr = "";
+	var tempNumSumStr = '';
+	var tempNum1 = '';
+	var tempNum2 = '';
+	var tempNum3 = '';
+	var tempParseIndex1 = '';
+	var tempParseIndex2 = '';
+	var tempParseIndex3 = '';
+	var tempParseIndex4 = '';
+	var encIndex = 0;
+	var lastTempNum = 0;
+	var keyParseNum = parseInt(decoding.substr(decoding.length - 2), 16)-150;
+
+	var decodingTarget = decoding.substring(0, decoding.length - 2);
+	decodingTarget = decodingTarget.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+
+	if (decodingTarget.length%4 > 0){
+		decodingTarget+= Array((decodingTarget.length%4)+1).join('=');
+	}
+
+	while (encIndex < decodingTarget.length) {
+		keyValue = _snipString(keyValue,keyParseNum);
+		keyValueParse = keyValue + "+/=";
+
+		tempNumSumStr = decodingTarget.charAt(encIndex++) + decodingTarget.charAt(encIndex++) + decodingTarget.charAt(encIndex++) + decodingTarget.charAt(encIndex++);
+
+		lastTempNum++;
+
+		if (tempNumSumStr[2] != '=' && tempNumSumStr[3] != '='){
+			tempNumSumStr = _snipString(tempNumSumStr, 4-(lastTempNum%4));
 		}
-		if (a != 64) {
-			t = t + CC(i)
+
+
+		tempParseIndex1 = keyValueParse.indexOf(tempNumSumStr[0]);
+		tempParseIndex2 = keyValueParse.indexOf(tempNumSumStr[1]);
+		tempParseIndex3 = keyValueParse.indexOf(tempNumSumStr[2]);
+		tempParseIndex4 = keyValueParse.indexOf(tempNumSumStr[3]);
+
+		tempNum1 = tempParseIndex1 << 2 | tempParseIndex2 >> 4;
+		tempNum2 = (tempParseIndex2 & 15) << 4 | tempParseIndex3 >> 2;
+		tempNum3 = (tempParseIndex3 & 3) << 6 | tempParseIndex4;
+		tempNumMergeStr = tempNumMergeStr + CC(tempNum1);
+
+		if (tempParseIndex3 != 64) {
+			tempNumMergeStr = tempNumMergeStr + CC(tempNum2)
+		}
+
+		if (tempParseIndex4 != 64) {
+			tempNumMergeStr = tempNumMergeStr + CC(tempNum3)
 		}
 	}
-	t = _utf8_decode(t);
-	return t
+
+	return _utf8_decode(tempNumMergeStr);
 };
 
 function _utf8Encode(e) {
