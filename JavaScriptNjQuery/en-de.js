@@ -71,16 +71,7 @@ function en(encTarget) {
 
 function de(decoding) {
 	var keyValue = _keyStr;
-	var keyValueParse = '';
-	var tempNumMergeStr = "";
-	var tempNumSumStr = '';
-	var tempNum1 = '';
-	var tempNum2 = '';
-	var tempNum3 = '';
-	var tempParseIndex1 = '';
-	var tempParseIndex2 = '';
-	var tempParseIndex3 = '';
-	var tempParseIndex4 = '';
+	var tempNumMergeStr = '';
 	var encIndex = 0;
 	var lastTempNum = 0;
 	var keyParseNum = parseInt(decoding.substr(decoding.length - 2), 16)-150;
@@ -94,9 +85,9 @@ function de(decoding) {
 
 	while (encIndex < decodingTarget.length) {
 		keyValue = _snipString(keyValue,keyParseNum);
-		keyValueParse = keyValue + "+/=";
+		var keyValueParse = keyValue + "+/=";
 
-		tempNumSumStr = decodingTarget.charAt(encIndex++) + decodingTarget.charAt(encIndex++) + decodingTarget.charAt(encIndex++) + decodingTarget.charAt(encIndex++);
+		var tempNumSumStr = decodingTarget.charAt(encIndex++) + decodingTarget.charAt(encIndex++) + decodingTarget.charAt(encIndex++) + decodingTarget.charAt(encIndex++);
 
 		lastTempNum++;
 
@@ -105,22 +96,23 @@ function de(decoding) {
 		}
 
 
-		tempParseIndex1 = keyValueParse.indexOf(tempNumSumStr[0]);
-		tempParseIndex2 = keyValueParse.indexOf(tempNumSumStr[1]);
-		tempParseIndex3 = keyValueParse.indexOf(tempNumSumStr[2]);
-		tempParseIndex4 = keyValueParse.indexOf(tempNumSumStr[3]);
+		var tempParseIndex1 = keyValueParse.indexOf(tempNumSumStr[0]);
+		var tempParseIndex2 = keyValueParse.indexOf(tempNumSumStr[1]);
+		var tempParseIndex3 = keyValueParse.indexOf(tempNumSumStr[2]);
+		var tempParseIndex4 = keyValueParse.indexOf(tempNumSumStr[3]);
 
-		tempNum1 = tempParseIndex1 << 2 | tempParseIndex2 >> 4;
-		tempNum2 = (tempParseIndex2 & 15) << 4 | tempParseIndex3 >> 2;
-		tempNum3 = (tempParseIndex3 & 3) << 6 | tempParseIndex4;
-		tempNumMergeStr = tempNumMergeStr + CC(tempNum1);
+		var tempNum1 = tempParseIndex1 << 2 | tempParseIndex2 >> 4;
+		var tempNum2 = (tempParseIndex2 & 15) << 4 | tempParseIndex3 >> 2;
+		var tempNum3 = (tempParseIndex3 & 3) << 6 | tempParseIndex4;
+
+		tempNumMergeStr = tempNumMergeStr + _getUnicodeStr(tempNum1);
 
 		if (tempParseIndex3 != 64) {
-			tempNumMergeStr = tempNumMergeStr + CC(tempNum2)
+			tempNumMergeStr = tempNumMergeStr + _getUnicodeStr(tempNum2)
 		}
 
 		if (tempParseIndex4 != 64) {
-			tempNumMergeStr = tempNumMergeStr + CC(tempNum3)
+			tempNumMergeStr = tempNumMergeStr + _getUnicodeStr(tempNum3)
 		}
 	}
 
@@ -133,14 +125,14 @@ function _utf8Encode(e) {
 	for (var n = 0; n < e.length; n++) {
 		var r = e.charCodeAt(n);
 		if (r < 128) {
-			t += CC(r)
+			t += _getUnicodeStr(r)
 		} else if (r > 127 && r < 2048) {
-			t += CC(r >> 6 | 192);
-			t += CC(r & 63 | 128)
+			t += _getUnicodeStr(r >> 6 | 192);
+			t += _getUnicodeStr(r & 63 | 128)
 		} else {
-			t += CC(r >> 12 | 224);
-			t += CC(r >> 6 & 63 | 128);
-			t += CC(r & 63 | 128)
+			t += _getUnicodeStr(r >> 12 | 224);
+			t += _getUnicodeStr(r >> 6 & 63 | 128);
+			t += _getUnicodeStr(r & 63 | 128)
 		}
 	}
 	return t
@@ -153,24 +145,24 @@ function _utf8_decode (e) {
 	while (n < e.length) {
 		r = e.charCodeAt(n);
 		if (r < 128) {
-			t += CC(r);
+			t += _getUnicodeStr(r);
 			n++
 		} else if (r > 191 && r < 224) {
 			var c2 = e.charCodeAt(n + 1);
-			t += CC((r & 31) << 6 | c2 & 63);
+			t += _getUnicodeStr((r & 31) << 6 | c2 & 63);
 			n += 2
 		} else {
 			var c2 = e.charCodeAt(n + 1);
 			var c3 = e.charCodeAt(n + 2);
-			t += CC((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
+			t += _getUnicodeStr((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
 			n += 3
 		}
 	}
 	return t
 };
 
-function CC(e) {
-	return String.fromCharCode(e)
+function _getUnicodeStr(unicodeNum) {
+	return String.fromCharCode(unicodeNum);
 };
 
 function _snipString(str, num) {
