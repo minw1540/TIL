@@ -84,7 +84,9 @@ function de(decoding) {
 	}
 
 	while (encIndex < decodingTarget.length) {
+
 		keyValue = _snipString(keyValue,keyParseNum);
+
 		var keyValueParse = keyValue + "+/=";
 
 		var tempNumSumStr = decodingTarget.charAt(encIndex++) + decodingTarget.charAt(encIndex++) + decodingTarget.charAt(encIndex++) + decodingTarget.charAt(encIndex++);
@@ -116,32 +118,37 @@ function de(decoding) {
 		}
 	}
 
-	return _utf8_decode(tempNumMergeStr);
+	return _utf8Decode(tempNumMergeStr);
 };
 
-function _utf8Encode(e) {
-	e = e.toString().replace(/\r\n/g, "\n");
-	var t = "";
-	for (var n = 0; n < e.length; n++) {
-		var r = e.charCodeAt(n);
-		if (r < 128) {
-			t += _getUnicodeStr(r)
-		} else if (r > 127 && r < 2048) {
-			t += _getUnicodeStr(r >> 6 | 192);
-			t += _getUnicodeStr(r & 63 | 128)
+function _utf8Encode(encode) {
+
+	var encStr = encode.toString().replace(/\r\n/g, '\n');
+	var returnStr = '';
+
+	for (var ii = 0; ii < encStr.length; ii++) {
+		var unicodeNum = encStr.charCodeAt(ii);
+		if (unicodeNum < 128) {
+			returnStr += _getUnicodeStr(unicodeNum);
+		} else if (unicodeNum > 127 && unicodeNum < 2048) {
+			returnStr += _getUnicodeStr(unicodeNum >> 6 | 192);
+			returnStr += _getUnicodeStr(unicodeNum & 63 | 128);
 		} else {
-			t += _getUnicodeStr(r >> 12 | 224);
-			t += _getUnicodeStr(r >> 6 & 63 | 128);
-			t += _getUnicodeStr(r & 63 | 128)
+			returnStr += _getUnicodeStr(unicodeNum >> 12 | 224);
+			returnStr += _getUnicodeStr(unicodeNum >> 6 & 63 | 128);
+			returnStr += _getUnicodeStr(unicodeNum & 63 | 128);
 		}
 	}
-	return t
+
+	return returnStr;
 };
 
-function _utf8_decode (e) {
+function _utf8Decode(e) {
+
 	var t = "";
 	var n = 0;
 	var r;
+
 	while (n < e.length) {
 		r = e.charCodeAt(n);
 		if (r < 128) {
@@ -155,10 +162,11 @@ function _utf8_decode (e) {
 			var c2 = e.charCodeAt(n + 1);
 			var c3 = e.charCodeAt(n + 2);
 			t += _getUnicodeStr((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
-			n += 3
+			n += 3;
 		}
 	}
-	return t
+
+	return t;
 };
 
 function _getUnicodeStr(unicodeNum) {
