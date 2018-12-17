@@ -7,6 +7,8 @@ var _keyStr = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		1234567,
 		1,
 		{'name' : 'myTest'},
+		'가나다라마바사아자차파타하나다아',
+		'!@#$%^&*()[];:~'
 	];
 
 	for(var ii = 0; ii < testCase.length; ii++){
@@ -143,30 +145,30 @@ function _utf8Encode(encode) {
 	return returnStr;
 };
 
-function _utf8Decode(e) {
+function _utf8Decode(decoding) {
 
-	var t = "";
-	var n = 0;
-	var r;
+	var returnStr = '';
+	var index = 0;
 
-	while (n < e.length) {
-		r = e.charCodeAt(n);
-		if (r < 128) {
-			t += _getUnicodeStr(r);
-			n++
-		} else if (r > 191 && r < 224) {
-			var c2 = e.charCodeAt(n + 1);
-			t += _getUnicodeStr((r & 31) << 6 | c2 & 63);
-			n += 2
+	while (index < decoding.length) {
+		var unicodeSrt = decoding.charCodeAt(index);
+
+		if (unicodeSrt < 128) {
+			returnStr += _getUnicodeStr(unicodeSrt);
+			index++
+		} else if (unicodeSrt > 191 && unicodeSrt < 224) {
+			var unicodeSrtTemp = decoding.charCodeAt(index + 1);
+			returnStr += _getUnicodeStr((unicodeSrt & 31) << 6 | unicodeSrtTemp & 63);
+			index += 2;
 		} else {
-			var c2 = e.charCodeAt(n + 1);
-			var c3 = e.charCodeAt(n + 2);
-			t += _getUnicodeStr((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
-			n += 3;
+			var unicodeSrtTemp = decoding.charCodeAt(index + 1);
+			var unicodeSrtTemp2 = decoding.charCodeAt(index + 2);
+			returnStr += _getUnicodeStr((unicodeSrt & 15) << 12 | (unicodeSrtTemp & 63) << 6 | unicodeSrtTemp2 & 63);
+			index += 3;
 		}
 	}
 
-	return t;
+	return returnStr;
 };
 
 function _getUnicodeStr(unicodeNum) {
