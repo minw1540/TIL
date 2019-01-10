@@ -263,5 +263,13 @@
 
 
 
+<br><br><br>
+
+참고 : 
+
+- https://meetup.toast.com/posts/86
+- http://www.nextree.co.kr/p7363/
+- https://hyunseob.github.io/2016/08/30/javascript-closure/
+- http://unikys.tistory.com/308?category=442063
 
 
