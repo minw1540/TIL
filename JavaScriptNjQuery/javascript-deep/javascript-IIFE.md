@@ -22,6 +22,7 @@
 함수 선언식(function declaration)으로 함수가 선언되면 해당 함수가 스코프 최상단으로 Hoisting(호이스팅)되어 함수 선언의 위치와는 상관없이 소스 내 어느 곳에서든지 호출이 가능하다.
 
 <br>
+
 **2. 함수 표현식(function expression)**
 
 	const myFunction = function () {
@@ -84,6 +85,7 @@
 
 
 <br>
+
 **2. parameter 전달 방법**
 
 
@@ -95,6 +97,7 @@
 전달한 parameter값의 코드 충돌, overwritting을 방지 할 수 있다.
 
 <br>
+
 **3. IIFE(즉시실행함수)와 Closure(클로저)함수**
 
 	let outer = (function (startNum) {
