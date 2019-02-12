@@ -35,6 +35,7 @@
 함수 선언식(function declaration)을 너무 많이 사용 하게 될 경우 자바스크립트의 인터프리터가 너무 많은 코드를 VO(variable object)에 저장하므로 애플리케이션의 응답속도는 현저히 떨어질 수 있으므로 주의가 필요하다.
 
 <br>
+
 ### Immediately-invoked function expression (즉시실행함수)
 ---
 
