@@ -78,7 +78,6 @@
 
 그 이유는 함수 표현식(function expression)을 통한 함수 정의 방법은 변수에 함수를 초기화시키기 때문에 선언문이 호이스팅이 되어 상단으로 올려진다 하더라도 함수가 아닌 변수로써 인지되기 때문이다.
 
-(즉, 변수로 선언되어 `undefined`가 나온다. 그 후 런타임시 해당 변수에 값이 할당된다.)
 
 
 	myFunction(); //ReferenceError: myFunction is not defined
