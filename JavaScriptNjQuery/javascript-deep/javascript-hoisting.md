@@ -33,7 +33,7 @@
 	console.log(myVariable); //결과 : 'hi?'
 
 <br><br><br>
-첫번째 `console.log()`에서 `undefined`가 출력되는 이유는 자바스크립트에서는 선언문의 경우 자바스크립트 엔진이 가장 최우선적으로 해석을 하게되고, 변수 값의 할당의 경우 런타임 과정에서 이루어지기 때문에 Hoisting(호이스팅) 되지 않아 `undefined`가 출력된다.
+첫번째 `console.log()`에서 `undefined`가 출력되는 이유는 자바스크립트에서는 선언문의 경우 자바스크립트 엔진이 가장 최우선적으로 해석을 하게되고, 변수 값의 할당의 경우 런타임 과정에서 이루어지기 때문에 Hoisting(호이스팅) 되어 `undefined`가 출력된다.
 	
 	/**
 	 * 선언된 'myVariable'가 먼저 Hoisting(호이스팅)되고 변수값은 런타임시 할당된다.
