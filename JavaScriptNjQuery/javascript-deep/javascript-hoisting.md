@@ -80,9 +80,9 @@
 
 
 
-	myFunction(); //ReferenceError: myFunction is not defined
+	myFunction(); //TypeError: myFunction is not a function
 	
-	const myFunction = function () {
+	var myFunction = function () {
 		console.log('hi?');
 		return;
 	}
