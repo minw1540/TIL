@@ -1,6 +1,6 @@
-# JavaScript & jQuery
+# JavaScript
 
-> JavaScript와 jQuery
+> JavaScript
 
 
 ## List
