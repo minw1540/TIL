@@ -2,13 +2,13 @@
 
 - [Angular][]
 - [Vue][]
-- [JavaScriptNjQuery][]
+- [JavaScript][]
 - [D3.js][]
 - [css][]
 
 [css]: https://github.com/minw1540/TIL/tree/master/css
 
-[JavaScriptNjQuery]: https://github.com/minw1540/TIL/tree/master/JavaScriptNjQuery
+[JavaScript]: https://github.com/minw1540/TIL/tree/master/JavaScript
 
 [Angular]: https://github.com/minw1540/TIL/tree/master/Angular
 
